@@ -23,7 +23,7 @@ function ProfileSidebar(propriedades) {
 }
 
 export default function Home() {
-  const usuarioAleatorio = 'omariosouto';
+  const usuarioAleatorio = 'adfontana';
   const [comunidades, setComunidades] = React.useState([{
     id: '12802378123789378912789789123896123', 
     title: 'Eu odeio acordar cedo',
@@ -35,11 +35,11 @@ export default function Home() {
   console.log('Nosso teste', );
   // const comunidades = ['Alurakut'];
   const pessoasFavoritas = [
-    'juunegreiros',
-    'omariosouto',
-    'peas',
-    'rafaballerini',
-    'marcobrunodev',
+    'vanessakoch',
+    'danielbraghini',
+    'henriquesandri',
+    'andrebraghini',
+    'igsrc',
     'felipefialho',
   ]
 
