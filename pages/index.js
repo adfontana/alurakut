@@ -26,10 +26,10 @@ function ProfileRelationsBox(propriedades) {
   return (
     <ProfileRelationsBoxWrapper>
       <h2 className="smallTitle">
-        {propriedades.title} ({propriedades.length})
+        {propriedades.title} ({propriedades.items.length})
       </h2>
       <ul>
-        {propriedades.items.map((itemAtual) => {
+        {propriedades.items.slice(0, 6).map((itemAtual) => {
           return (
             <li key={itemAtual.login}>
               <a href={`https://github.com/${itemAtual.login}.png`}>
@@ -108,7 +108,7 @@ export default function Home() {
 
   return (
     <>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser="adfontana"/>
       <MainGrid>
         {/* <Box style="grid-area: profileArea;"> */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
@@ -176,13 +176,13 @@ export default function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
-          <ProfileRelationsBox title="Seguidores" length={seguidores.length} items={seguidores.slice(0, 6)} />
+          <ProfileRelationsBox title="Seguidores" items={seguidores} />
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
               Comunidades ({comunidades.length})
             </h2>
             <ul>
-              {comunidades.map((itemAtual) => {
+              {comunidades.slice(0, 6).map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
                     <a href={`/communities/${itemAtual.id}`}>
@@ -200,7 +200,7 @@ export default function Home() {
             </h2>
 
             <ul>
-              {pessoasFavoritas.map((itemAtual) => {
+              {pessoasFavoritas.slice(0, 6).map((itemAtual) => {
                 return (
                   <li key={itemAtual}>
                     <a href={`/users/${itemAtual}`}>
