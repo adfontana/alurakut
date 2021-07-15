@@ -4,6 +4,12 @@ import NextLink from 'next/link';
 
 const BASE_URL = 'http://alurakut.vercel.app/';
 const v = '1';
+const themes = [
+  {
+    primary: '#45B39D',
+    secondary: '#0B5345'
+  }
+]
 
 
 function Link({ href, children, ...props }) {
@@ -24,7 +30,7 @@ export function AlurakutMenu({ githubUser }) {
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
+      <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
 
         <nav style={{ flex: 1 }}>
           {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
@@ -39,7 +45,7 @@ export function AlurakutMenu({ githubUser }) {
             Sair
           </a>
           <div>
-            <input placeholder="Pesquisar no Orkut" />
+            <input placeholder="Pesquisar no Futkut" />
           </div>
         </nav>
 
@@ -54,7 +60,7 @@ export function AlurakutMenu({ githubUser }) {
 }
 AlurakutMenu.Wrapper = styled.header`
   width: 100%;
-  background-color: #308BC5;
+  background-color: ${themes[0].secondary};
 
   .alurakutMenuProfileSidebar {
     background: white;
@@ -96,7 +102,7 @@ AlurakutMenu.Wrapper = styled.header`
   }
 
   .container {
-    background-color: #308BC5;
+    background-color: ${themes.secondary};
     padding: 7px 16px;
     max-width: 1110px;
     margin: auto;
@@ -131,7 +137,7 @@ AlurakutMenu.Wrapper = styled.header`
         text-decoration: none;
         &:after {
           content: " ";
-          background-color: #5292C1;
+          
           display: block;
           position: absolute;
           width: 1px;
@@ -145,7 +151,7 @@ AlurakutMenu.Wrapper = styled.header`
     }
     input {
       color: #ffffff;
-      background: #5579A1;
+      background: #1E8449;
       padding: 10px 42px;
       border: 0;
       background-image: url(${`${BASE_URL}/icons/search.svg`});
@@ -227,7 +233,7 @@ export function AlurakutProfileSidebarMenuDefault() {
 AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
   a {
     font-size: 12px;
-    color: #2E7BB4;
+    color: #0B5345;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
