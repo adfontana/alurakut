@@ -30,10 +30,9 @@ export function AlurakutMenu({ githubUser }) {
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-      <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
-
+        <AlurakutMenu.Logo src={`/logo.png`} />
         <nav style={{ flex: 1 }}>
-          {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
+          {[{ name: 'Inicio', slug: '/' }, { name: 'Amigos', slug: '/amigos' }, { name: 'Comunidades', slug: '/comunidades' }].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
               {menuItem.name}
             </Link>
@@ -45,7 +44,7 @@ export function AlurakutMenu({ githubUser }) {
             Sair
           </a>
           <div>
-            <input placeholder="Pesquisar no Futkut" />
+            <input placeholder="Pesquisar no Futekut" />
           </div>
         </nav>
 
@@ -201,31 +200,31 @@ export function AlurakutProfileSidebarMenuDefault() {
       <nav>
         <a href="/">
           <img src={`${BASE_URL}/icons/user.svg`} />
-            Perfil
-          </a>
+          Perfil
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/book.svg`} />
-            Recados
-          </a>
+          Recados
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/camera.svg`} />
-            Fotos
-          </a>
+          Fotos
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/sun.svg`} />
-            Depoimentos
-          </a>
+          Depoimentos
+        </a>
       </nav>
       <hr />
       <nav>
         <a href="/">
           <img src={`${BASE_URL}/icons/plus.svg`} />
-            GitHub Trends
-          </a>
+          GitHub Trends
+        </a>
         <a href="/logout">
           <img src={`${BASE_URL}//icons/logout.svg`} />
-            Sair
-          </a>
+          Sair
+        </a>
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
   )
