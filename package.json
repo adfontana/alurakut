@@ -7,7 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "datocms-client": "^3.4.10",
+    "datocms-client": "^3.4.11",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.5.1",
     "next": "latest",
