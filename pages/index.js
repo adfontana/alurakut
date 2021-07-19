@@ -9,7 +9,7 @@ import { RelationsArea } from '../src/components/RelationsArea';
 import { getFollowers } from '../src/services/github.service';
 import { getList } from '../src/services/community.service';
 import { userAuthenticated } from '../src/services/alurakut.service';
-import 'font-awesome/css/font-awesome.min.css';
+// import 'font-awesome/css/font-awesome.min.css';
 
 export default function Home(props) {
   const user = props.githubUser;
