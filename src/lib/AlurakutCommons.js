@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import NextLink from 'next/link';
+import { destroyCookie } from 'nookies';
 
 const BASE_URL = 'http://alurakut.vercel.app/';
 const v = '1';
@@ -22,6 +23,13 @@ function Link({ href, children, ...props }) {
   )
 }
 
+/**
+ * Destroy the USER_TOKEN cookie
+ */
+function handleLogout() {
+  destroyCookie(null, 'USER_TOKEN');
+}
+
 // ================================================================================================================
 // Menu
 // ================================================================================================================
@@ -40,7 +48,7 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>
+          <a href={`/login`} onClick={handleLogout}>
             Sair
           </a>
           <div>
@@ -331,13 +339,13 @@ OrkutNostalgicIconSet.List = styled.ul`
 const AlurakutLoginScreen = css`
   :root {
     --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #F1F9FE;
+    --backgroundSecondary: #E8F6F3;
     --backgroundTertiary: #FFFFFF;
-    --backgroundQuarternary: #BBCDE8;
-    --colorPrimary: #2E7BB4;
+    --backgroundQuarternary: #73C6B6;
+    --colorPrimary: #1E8449;
     --colorSecondary: #388BB0;
     --colorTertiary: #2F4A71;
-    --colorQuarternary: #D81D99;
+    --colorQuarternary: #0B5345;
     --textPrimaryColor: #333333;
     --textSecondaryColor: #FFFFFF;
     --textTertiaryColor: #5A5A5A;
@@ -458,7 +466,7 @@ const AlurakutLoginScreen = css`
         text-align: center;
         a {
           text-decoration: none;
-          color: var(--colorPrimary);
+          color: #145A32;
         }
       }
     }

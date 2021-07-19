@@ -2,222 +2,49 @@ import React from 'react';
 import nookies from 'nookies';
 import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid'
-import Box from '../src/components/Box'
-import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
-import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
-
-function ProfileSidebar(propriedades) {
-  return (
-    <Box as="aside">
-      <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '50%' }} />
-      <hr />
-
-      <p>
-        <a className="boxLink" href={`https://github.com/${propriedades.githubUser}`}>
-          @{propriedades.githubUser}
-        </a>
-      </p>
-      <hr />
-
-      <AlurakutProfileSidebarMenuDefault />
-    </Box>
-  )
-}
-
-function MainArea() {
-  return (
-    <>
-      <Box>
-        <h1 className="title">
-          Bem vindo(a)
-        </h1>
-        <OrkutNostalgicIconSet />
-      </Box>
-
-      <Box>
-        <h2 className="subTitle">O que você deseja fazer?</h2>
-        <form onSubmit={function handleCriaComunidade(e) {
-          e.preventDefault();
-          const dadosDoForm = new FormData(e.target);
-          const comunidade = {
-            title: dadosDoForm.get('title'),
-            imageUrl: dadosDoForm.get('image'),
-            creatorSlug: usuarioAleatorio,
-          }
-
-          fetch('/api/comunidades', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(comunidade)
-          })
-            .then(async (response) => {
-              const dados = await response.json();
-              const comunidade = dados.registroCriado;
-              const comunidadesAtualizadas = [...comunidades, comunidade];
-              setComunidades(comunidadesAtualizadas)
-            })
-        }}>
-          <div>
-            <input
-              placeholder="Qual vai ser o nome da sua comunidade?"
-              name="title"
-              aria-label="Qual vai ser o nome da sua comunidade?"
-              type="text"
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Coloque uma URL para usarmos de capa"
-              name="image"
-              aria-label="Coloque uma URL para usarmos de capa"
-            />
-          </div>
-
-          <button>
-            Criar comunidade
-          </button>
-        </form>
-      </Box>
-    </>
-  );
-}
-
-function ProfileRelationsBox(propriedades) {
-  return (
-    <ProfileRelationsBoxWrapper>
-      <h2 className="smallTitle">
-        {propriedades.title} ({propriedades.items.length})
-      </h2>
-      <ul>
-        {propriedades.items.slice(0, 6).map((itemAtual) => {
-          return (
-            <li key={itemAtual.login}>
-              <a href={`https://github.com/${itemAtual.login}.png`}>
-                <img src={itemAtual.avatar_url} />
-                <span>{itemAtual.login}</span>
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </ProfileRelationsBoxWrapper>
-  )
-}
+import { AlurakutMenu } from '../src/lib/AlurakutCommons';
+import { MainArea } from '../src/components/MainArea';
+import { ProfileSidebar } from '../src/components/ProfileSidebar';
+import { RelationsArea } from '../src/components/RelationsArea';
+import { getFollowers } from '../src/services/github.service';
+import { getList } from '../src/services/community.service';
+import { userAuthenticated } from '../src/services/alurakut.service';
+import 'font-awesome/css/font-awesome.min.css';
 
 export default function Home(props) {
-  const usuarioAleatorio = props.githubUser;
+  const user = props.githubUser;
   const [comunidades, setComunidades] = React.useState([]);
-  const pessoasFavoritas = [
-    'vanessakoch',
-    'danielbraghini',
-    'henriquesandri',
-    'andrebraghini',
-    'igsrc',
-    'felipefialho',
-  ]
   const [seguidores, setSeguidores] = React.useState([]);
 
-  function RelationsArea() {
-    return (
-      <>
-        <ProfileRelationsBox title="Seguidores" items={seguidores} />
-        <ProfileRelationsBoxWrapper>
-          <h2 className="smallTitle">
-            Comunidades ({comunidades.length})
-          </h2>
-          <ul>
-            {comunidades.slice(0, 6).map((itemAtual) => {
-              return (
-                <li key={itemAtual.id}>
-                  <a href={`/communities/${itemAtual.id}`}>
-                    <img src={itemAtual.imageUrl} />
-                    <span>{itemAtual.title}</span>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </ProfileRelationsBoxWrapper>
-        <ProfileRelationsBoxWrapper>
-          <h2 className="smallTitle">
-            Pessoas da comunidade ({pessoasFavoritas.length})
-          </h2>
-
-          <ul>
-            {pessoasFavoritas.slice(0, 6).map((itemAtual) => {
-              return (
-                <li key={itemAtual}>
-                  <a href={`/users/${itemAtual}`}>
-                    <img src={`https://github.com/${itemAtual}.png`} />
-                    <span>{itemAtual}</span>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </ProfileRelationsBoxWrapper>
-      </>
-    );
-  }
-
-  // 0 - Pegar o array de dados do github 
   React.useEffect(function () {
-    // GET
-    fetch('https://api.github.com/users/adfontana/followers')
-      .then(function (respostaDoServidor) {
-        return respostaDoServidor.json();
-      })
-      .then(function (respostaCompleta) {
-        setSeguidores(respostaCompleta);
-      })
-
-    // API GraphQL
-    fetch('https://graphql.datocms.com/', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'fdbe9eb3f2fd7ef6fb734a4f4b660f',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        "query": `query {
-        allCommunities {
-          id 
-          title
-          imageUrl
-          creatorSlug
-        }
-      }` })
-    })
-      .then((response) => response.json())
-      .then((respostaCompleta) => {
-        const comunidadesVindasDoDato = respostaCompleta.data.allCommunities;
-        setComunidades(comunidadesVindasDoDato)
-      })
+    // Set followers list
+    getFollowers(user)
+      .then(followers => setSeguidores(followers));
+    // Set communities list
+    getList()
+      .then(communities => setComunidades(communities));
   }, [])
 
   return (
     <>
       {/* Topbar menu */}
-      <AlurakutMenu githubUser="adfontana" />
+      <AlurakutMenu githubUser={user} />
 
       <MainGrid>
 
         {/* Sidebar */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
-          <ProfileSidebar githubUser={usuarioAleatorio} />
+          <ProfileSidebar githubUser={user} />
         </div>
 
         {/* Main area */}
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
-          <MainArea />
+          <MainArea communities={comunidades} setCommunities={setComunidades} creatorSlug={user} />
         </div>
 
         {/* Relations area */}
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
-          <RelationsArea />
+          <RelationsArea communities={comunidades} followers={seguidores} />
         </div>
 
       </MainGrid>
@@ -225,18 +52,18 @@ export default function Home(props) {
   )
 }
 
-
+/*
+ * Server side user validation
+ */
 export async function getServerSideProps(context) {
+  // Get the cookies in the browser
   const cookies = nookies.get(context)
+  // Get the user token stored in the cookies browser
   const token = cookies.USER_TOKEN;
-  const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
-    headers: {
-        Authorization: token
-      }
-  })
-  .then((resposta) => resposta.json())
-
-  if(!isAuthenticated) {
+  // Check if it's a valid token
+  const isAuthenticated = await userAuthenticated(token);
+  // If is not a valid token, redirect to the login page
+  if (!isAuthenticated) {
     return {
       redirect: {
         destination: '/login',
@@ -244,7 +71,7 @@ export async function getServerSideProps(context) {
       }
     }
   }
-
+  // If is a valid token, get the user information
   const { githubUser } = jwt.decode(token);
   return {
     props: {
