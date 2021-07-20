@@ -9,7 +9,7 @@ import { RelationsArea } from '../src/components/RelationsArea';
 import { getFollowers } from '../src/services/github.service';
 import { getList } from '../src/services/community.service';
 import { userAuthenticated } from '../src/services/alurakut.service';
-// import 'font-awesome/css/font-awesome.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 export default function Home(props) {
   const user = props.githubUser;
@@ -72,7 +72,9 @@ export async function getServerSideProps(context) {
     }
   }
   // If is a valid token, get the user information
-  const { githubUser } = jwt.decode(token);
+  const decodedToken = jwt.decode(token);
+  const githubUser = decodedToken?.githubUser;
+  
   return {
     props: {
       githubUser

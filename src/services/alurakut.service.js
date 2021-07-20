@@ -32,4 +32,5 @@ export async function userAuthenticated(token) {
     // Request the user authentication
     return await fetch(url + '/auth', options)
         .then((resposta) => resposta.json())
+        .then((data) => data.isAuthenticated);
 }
