@@ -12,7 +12,9 @@ import { userAuthenticated } from '../src/services/alurakut.service';
 import 'font-awesome/css/font-awesome.min.css';
 
 export default function Home(props) {
+  // User authenticated by the server 
   const user = props.githubUser;
+  // Initialize comunities and followers
   const [comunidades, setComunidades] = React.useState([]);
   const [seguidores, setSeguidores] = React.useState([]);
 
