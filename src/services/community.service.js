@@ -24,7 +24,7 @@ function getHttpListOptions() {
         },
         body: JSON.stringify({
             "query": `query {
-          allCommunities (orderBy: id_DESC) {
+          allCommunities {
             id 
             title
             imageUrl
