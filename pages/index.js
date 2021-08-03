@@ -76,10 +76,10 @@ export async function getServerSideProps(context) {
   // If is a valid token, get the user information
   const decodedToken = jwt.decode(token);
   const githubUser = decodedToken?.githubUser;
-  
+  // will be passed to the page component as props
   return {
     props: {
-      githubUser
-    }, // will be passed to the page component as props
+      githubUser,
+    }
   }
 }
