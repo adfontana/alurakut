@@ -1,5 +1,6 @@
 import React from "react";
 import { OrkutNostalgicIconSet } from "../../lib/AlurakutCommons";
+import { checkUrl } from "../../lib/utils";
 import { addCommunity } from "../../services/community.service";
 import Box from "../Box";
 import { ButtonLoader } from "../ButtonLoader";
@@ -10,11 +11,13 @@ export function MainArea({ communities, setCommunities, creatorSlug }) {
 
     function getFormData(event) {
         const dadosDoForm = new FormData(event.target);
-        return {
+        const data = {
             title: dadosDoForm.get('title'),
             imageUrl: dadosDoForm.get('image'),
-            creatorSlug,
+            creatorSlug
         }
+        validadeData(data);
+        return data;
     }
 
     async function handleCriaComunidade(event) {
@@ -31,6 +34,18 @@ export function MainArea({ communities, setCommunities, creatorSlug }) {
             console.log(error);
         } finally {
             setLoading(false);
+        }
+    }
+
+    function validadeData(data) {
+        if (!data.title) {
+            throw new Error('O título é obrigatório');
+        }
+        if (!data.imageUrl) {
+            throw new Error('A imagem é obrigatória');
+        }
+        if (!checkUrl(data.imageUrl)) {
+            throw new Error('A imagem é inválida');
         }
     }
 
